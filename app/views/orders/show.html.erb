@@ -1,3 +1,12 @@
+<% 
+    shipping_date = @order.created_at + 1.day
+    ship_day = shipping_date.strftime("%A, %B %d, %Y")
+   
+    arrival_date = @order.created_at + 2.day
+    arrival_day = arrival_date.strftime("%A, %B %d, %Y")
+    
+    puts "#{@order.to_s}"
+%>
 <section class="orders-show">
 
   <header class="page-header">
@@ -8,16 +17,15 @@
       <table class="table table-bordered">
         <thead>
           <tr>
-            <th colspan="2">ORDER PLACED</th>
-            <span>test date</span>
+            <th colspan="2">ORDER PLACED: <span class = "date"> <%= @order.created_at.strftime("%F") %></span></th>
             <th>QUANTITY</th>
             <th>PRICE</th>
           </tr>
         </thead>
 
         <tbody>
-          <% enhanced_cart.each do |item| %>
-            <%= render 'item', product: item[:product], quantity: item[:quantity].to_i %>
+          <% @order.line_items.each do |item| %>
+            <%= render 'item', product: item.product, quantity: item[:quantity].to_i %>
           <% end %>
         </tbody>
         <tfoot>
@@ -26,7 +34,7 @@
               TOTAL:
             </th>
             <th>
-              <%= humanized_money_with_symbol cart_subtotal_cents / 100.0 %>
+              <%= humanized_money_with_symbol @order.total_cents / 100.0 %>
             </th>
           </tr>
         </tfoot>
@@ -35,7 +43,11 @@
   
   <div class="order-summary jumbotron">
     <h4>Thank you for your order!</h4>
-  </div>
+    <p>You order confirmation has been sent to: <%= @order.email %></p>
+    <br>
+    <span>Your estimated delivery date is:</span>
+    <p><%= ship_day %> - <%= arrival_day %></p>
+    </div>
 
   <%= link_to "Continue Shopping", root_path, class: 'btn btn-lg btn-primary' %>
 
