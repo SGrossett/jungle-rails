@@ -1,4 +1,4 @@
-class CategoriesController < ApplicationController
+class AboutController < ApplicationController
   def show
   end
 end
