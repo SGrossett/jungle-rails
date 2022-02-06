@@ -13,9 +13,10 @@
   <main class="container">
   
   <% if active_sale? %>
+  <% puts "Active sale : #{@sale}" %>
     <p class="alert alert-info"> 
-      Theres an active <%= "Back to school" %> sale going on!
-      <strong>Everything is <%= 15 %>% off!</strong>
+      There's an active <%= "Valentine's Day Sale" %> going on!
+      <strong>Everything is <%= 30 %>% off!</strong>
     </p>
   <% end %>
     <%= yield %>
