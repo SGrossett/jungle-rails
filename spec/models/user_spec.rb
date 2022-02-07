@@ -63,6 +63,11 @@ RSpec.describe User, type: :model do
       expect(@user.errors.full_messages).to include("Last name can't be blank")
     end
   
+    it 'is not valid if the password length is less than 8' do
+      @user = User.create(first_name: "Steven", last_name: "Universe", email: "example@example.com", password: "eight", password_confirmation: "password")
+      expect(@user).to_not be_valid
+      expect(@user.errors.full_messages).to include("Password is too short (minimum is 8 characters)")
+    end
 
     describe '.authenticate_with_credentials' do
 
